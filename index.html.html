@@ -1,0 +1,902 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ib:#0c6fff;--id:#0a1628;--ig:#f4f6fb;--ibr:#e0e6f0;--it:#1a2340;--im:#6b7a99;--ign:#1aaa6e;--ir:#e03e3e;--ia:#e07c00}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--it);font-size:13px}
+.hdr{background:var(--id);border-radius:12px 12px 0 0;padding:14px 20px 0}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px}
+.logo-img{height:38px;width:auto;display:block}
+.hdr-stripe{height:3px;background:linear-gradient(90deg,var(--ib),#36c9ff,var(--ib))}
+.hdr-sub{padding:6px 0 14px;font-size:11px;color:#7eb8ff;opacity:.8}
+.lang-tog{display:inline-flex;background:rgba(255,255,255,.08);border:1px solid rgba(126,184,255,.3);border-radius:99px;padding:2px;gap:1px}
+.lang-tog button{background:transparent;border:none;color:#7eb8ff;font-size:10px;font-weight:700;padding:4px 11px;border-radius:99px;cursor:pointer;letter-spacing:.05em;transition:all .15s}
+.lang-tog button.on{background:var(--ib);color:#fff}
+.lang-tog button:hover:not(.on){color:#fff}
+.disclaimer{background:#fff7e0;border:1px solid #f0c66b;border-left:4px solid #e0a020;border-radius:7px;padding:10px 14px;font-size:11.5px;color:#6b4d00;margin:14px 0 4px;line-height:1.55;display:flex;gap:10px;align-items:flex-start}
+.disclaimer-icon{font-size:16px;line-height:1;flex-shrink:0;margin-top:1px}
+.disclaimer strong{color:#5a3d00}
+.body{background:#fff;border:1px solid var(--ibr);border-top:none;border-radius:0 0 12px 12px;padding:16px 20px}
+.tabs{display:flex;background:var(--ig);border-radius:8px;padding:3px;margin-bottom:16px;gap:3px}
+.tab{flex:1;padding:8px 0;font-size:12px;font-weight:600;border:none;border-radius:6px;cursor:pointer;transition:all .18s;background:transparent;color:var(--im);display:flex;align-items:center;justify-content:center;gap:6px}
+.tab.on{background:#fff;color:var(--ib);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.params{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+.params2{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.fl label{display:block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--im);margin-bottom:4px}
+.fl input,.fl select{width:100%;padding:8px 10px;border:1.5px solid var(--ibr);border-radius:7px;background:#fff;color:var(--it);font-size:12.5px;transition:border .15s}
+.fl input:focus,.fl select:focus{outline:none;border-color:var(--ib)}
+.fl input.inv-in{background:#fffbe6;border-color:#e0b800;font-weight:600}
+.fl input.inv-out{background:#f0f7ff;border-color:#b3d4ff;font-weight:600;color:var(--ib)}
+.fl input.inv-costo{background:#f0fff6;border-color:#6ddbb4;font-weight:600;color:var(--ign)}
+.sec{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--im);padding-bottom:5px;border-bottom:1.5px solid var(--ibr);margin-bottom:10px;margin-top:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.kpi{border-radius:8px;padding:11px 13px;border:1px solid var(--ibr);background:var(--ig)}
+.kpi.hl{background:linear-gradient(135deg,#eaf3ff,#f0f7ff);border-color:#b3d4ff}
+.klbl{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--im);margin-bottom:4px}
+.kval{font-size:18px;font-weight:600;line-height:1.2;color:var(--it)}
+.kval.g{color:var(--ign)}.kval.b{color:var(--ib)}.kval.r{color:var(--ir)}
+.ksub{font-size:10px;color:var(--im);margin-top:2px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pnl{background:#fafbfd;border:1px solid var(--ibr);border-radius:8px;padding:12px 14px}
+.pt{font-size:11px;font-weight:600;color:var(--im);margin-bottom:9px}
+.rd{display:flex;justify-content:space-between;align-items:baseline;padding:4.5px 0;border-bottom:1px solid var(--ibr);font-size:12px;gap:8px}
+.rd:last-child{border-bottom:none}
+.rd.tot{font-weight:600;font-size:12.5px;padding-top:8px;border-bottom:none;border-top:1.5px solid var(--ibr);margin-top:3px}
+.rl{color:var(--im);flex-shrink:0}.rv{font-weight:500;text-align:right}
+.g{color:var(--ign)}.r{color:var(--ir)}.b{color:var(--ib)}.a{color:var(--ia)}
+.ntc{border-radius:7px;padding:9px 13px;font-size:11px;margin-bottom:12px;line-height:1.55}
+.n-n{background:#eaf3ff;border:1px solid #b3d4ff;color:#0c3d7a}
+.n-z{background:#d4f5e5;border:1px solid #6ddbb4;color:#065f46}
+.tbl{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:14px;border-radius:8px;overflow:hidden;border:1px solid var(--ibr)}
+.tbl th{background:var(--id);color:#fff;padding:7px 9px;text-align:left;font-weight:600;font-size:9px;text-transform:uppercase;letter-spacing:.05em}
+.tbl td{padding:5px 9px;border-bottom:1px solid var(--ibr);vertical-align:middle}
+.tbl tr:nth-child(even) td{background:#fafbfd}
+.tbl tr.cur td{background:#eaf3ff}
+.tbl tr.cur td:first-child{border-left:3px solid var(--ib)}
+.bdg{display:inline-block;font-size:9px;font-weight:600;padding:2px 6px;border-radius:99px}
+.b-bl{background:#ddeeff;color:#0c4fb0}.b-gn{background:#d4f5e5;color:#0d6b42}
+.b-am{background:#ffecd0;color:#9c5200}.b-pu{background:#ede9fe;color:#5b21b6}
+.b-tl{background:#d0faf0;color:#065f46}.b-gr{background:#f1f3f9;color:#4b5776}
+.b-sel{background:var(--ib);color:#fff}
+.srt{display:flex;gap:6px;margin-bottom:10px}
+.sbt{padding:5px 12px;font-size:11px;border:1.5px solid var(--ibr);border-radius:99px;background:#fff;color:var(--im);cursor:pointer;transition:all .15s}
+.sbt.on{background:var(--ib);border-color:var(--ib);color:#fff}
+.info-box{background:#fffbe6;border:1px solid #ffe066;border-radius:7px;padding:9px 13px;font-size:11px;color:#7a5900;margin-bottom:12px;line-height:1.55}
+</style>
+
+<div style="padding:.5rem 0">
+<div class="hdr">
+  <div class="hdr-top">
+    <div style="display:flex;align-items:center;gap:14px">
+      <img src="data:image/png;base64,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" alt="involve SPACE" class="logo-img">
+      <div style="font-size:9px;color:#7eb8ff;letter-spacing:.08em;border-left:1px solid rgba(126,184,255,.3);padding-left:14px" data-i18n="tagline">HR CALCULATOR 2026</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="background:rgba(12,111,255,.2);border:1px solid rgba(12,111,255,.4);border-radius:6px;padding:4px 10px;font-size:10px;color:#7eb8ff;font-weight:500" data-i18n="incentivesBadge">AGEVOLAZIONI 2026</div>
+      <div class="lang-tog" role="group" aria-label="Language">
+        <button id="langIt" class="on" onclick="setLang('it')">IT</button>
+        <button id="langEn" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </div>
+  <div class="hdr-stripe"></div>
+  <div class="hdr-sub" data-i18n="hdrSub">Calcolatore HR · Tutte le regioni · Lordo ⇄ Netto · INPS apprendistato 5,84% · Gestione 14ª mensilità</div>
+</div>
+
+<div class="disclaimer">
+  <span class="disclaimer-icon">⚠️</span>
+  <span data-i18n="disclaimer"><strong>Attenzione — stime indicative.</strong> I valori calcolati sono <strong>stime</strong> basate su parametri normativi standard 2025-2026. Per dati ufficiali e personalizzati (situazione familiare, fringe benefit, conguagli, CCNL specifici, addizionali del comune di residenza) verifica sempre con l'<strong>ufficio HR</strong> e con il <strong>Consulente del Lavoro</strong>.</span>
+</div>
+
+<div class="body">
+<div id="ntcBox"></div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab on" id="t1" onclick="setTab(1)" data-i18n="tab1">📊 Lordo → Netto &amp; Costo azienda</button>
+  <button class="tab" id="t2" onclick="setTab(2)" data-i18n="tab2">🔄 Netto → Lordo (calcolo inverso)</button>
+</div>
+
+<!-- PARAMETRI COMUNI -->
+<div class="sec" data-i18n="secParams">Parametri lavoratore e azienda</div>
+<div class="params">
+  <div class="fl">
+    <label data-i18n="labProfile">Profilo / agevolazione</label>
+    <select id="cat" onchange="onInput()">
+      <option value="nessuna" data-i18n="optCatNone">-- Nessuna agevolazione --</option>
+      <optgroup label="Giovani" data-i18n-attr="label" data-i18n="optGrpYouth">
+        <option value="under35" data-i18n="optCatU35">Under 35 (mai avuto indeterminato)</option>
+        <option value="under30" data-i18n="optCatU30">Under 30 strutturale L.205/2017</option>
+      </optgroup>
+      <optgroup label="Donne" data-i18n-attr="label" data-i18n="optGrpWomen">
+        <option value="donna_str" data-i18n="optCatDonnaStr">Donna svantaggiata L.92/2012</option>
+        <option value="madri" data-i18n="optCatMadri">Madre 3+ figli minorenni</option>
+        <option value="violenza" data-i18n="optCatViolenza">Donna vittima di violenza</option>
+      </optgroup>
+      <optgroup label="Over 50" data-i18n-attr="label" data-i18n="optGrpOver50">
+        <option value="over50" data-i18n="optCatOver50">Over 50 disoccupato 12+ mesi</option>
+      </optgroup>
+      <optgroup label="Disabilità" data-i18n-attr="label" data-i18n="optGrpDisab">
+        <option value="disab35" data-i18n="optCatDisab35">Disabile lieve (20-79%)</option>
+        <option value="disab70" data-i18n="optCatDisab70">Disabile grave (>79%) permanente</option>
+        <option value="naspi" data-i18n="optCatNaspi">Percettore NASpI / ADI / SFL</option>
+      </optgroup>
+      <optgroup label="Contratto" data-i18n-attr="label" data-i18n="optGrpContract">
+        <option value="appr" selected data-i18n="optCatAppr">Apprendistato professionalizzante</option>
+      </optgroup>
+    </select>
+  </div>
+  <div class="fl">
+    <label data-i18n="labContract">Tipo contratto</label>
+    <select id="cntr" onchange="onInput()">
+      <option value="indet" data-i18n="optCntrIndet">Tempo indeterminato</option>
+      <option value="det" data-i18n="optCntrDet">Tempo determinato</option>
+      <option value="appr" selected data-i18n="optCntrAppr">Apprendistato</option>
+    </select>
+  </div>
+  <div class="fl">
+    <label data-i18n="labSector">Settore CCNL</label>
+    <select id="sett" onchange="onInput()">
+      <option value="ind" data-i18n="optSettInd">Industria / Terziario (28,56%)</option>
+      <option value="com" data-i18n="optSettCom">Commercio (30,20%)</option>
+      <option value="edi" data-i18n="optSettEdi">Edilizia (29,70%)</option>
+    </select>
+  </div>
+</div>
+<div class="params2">
+  <div class="fl">
+    <label data-i18n="labRegion">Regione</label>
+    <select id="reg" onchange="onInput()">
+      <optgroup label="Centro-Nord" data-i18n-attr="label" data-i18n="optGrpNorth">
+        <option value="LOM" selected data-i18n="optRegLOM">Lombardia (1,23%)</option>
+        <option value="PIE"None data-i18n="optRegPIE">Piemonte (1,62%)</option>
+        <option value="VEN"None data-i18n="optRegVEN">Veneto (1,61%)</option>
+        <option value="EMR"None data-i18n="optRegEMR">Emilia-Romagna (1,33%)</option>
+        <option value="TOS"None data-i18n="optRegTOS">Toscana (1,73%)</option>
+        <option value="LAZ"None data-i18n="optRegLAZ">Lazio (3,33%)</option>
+        <option value="LIG"None data-i18n="optRegLIG">Liguria (2,41%)</option>
+        <option value="MAR"None data-i18n="optRegMAR">Marche (1,73%)</option>
+        <option value="UMB"None data-i18n="optRegUMB">Umbria (1,73%)</option>
+        <option value="FVG"None data-i18n="optRegFVG">Friuli-V.G. (1,23%)</option>
+        <option value="TAA"None data-i18n="optRegTAA">Trentino-A.A. (1,23%)</option>
+        <option value="VDA"None data-i18n="optRegVDA">Valle d'Aosta (1,23%)</option>
+      </optgroup>
+      <optgroup label="ZES Mezzogiorno" data-i18n-attr="label" data-i18n="optGrpZes">
+        <option value="CAM"None data-i18n="optRegCAM">Campania — ZES (2,03%)</option>
+        <option value="PUG"None data-i18n="optRegPUG">Puglia — ZES (2,03%)</option>
+        <option value="CAL"None data-i18n="optRegCAL">Calabria — ZES (2,03%)</option>
+        <option value="SIC"None data-i18n="optRegSIC">Sicilia — ZES (2,03%)</option>
+        <option value="BAS"None data-i18n="optRegBAS">Basilicata — ZES (2,03%)</option>
+        <option value="SAR"None data-i18n="optRegSAR">Sardegna — ZES (2,03%)</option>
+        <option value="ABR"None data-i18n="optRegABR">Abruzzo — ZES (2,03%)</option>
+        <option value="MOL"None data-i18n="optRegMOL">Molise — ZES (2,03%)</option>
+      </optgroup>
+    </select>
+  </div>
+  <div class="fl">
+    <label data-i18n="labSize">Dimensione azienda</label>
+    <select id="dim" onchange="onInput()">
+      <option value="g" data-i18n="optDimG">11+ dipendenti</option>
+      <option value="m" data-i18n="optDimM">6-10 dipendenti</option>
+      <option value="p" data-i18n="optDimP">≤5 dipendenti</option>
+    </select>
+  </div>
+  <div class="fl">
+    <label data-i18n="labMonths">N° mensilità totali</label>
+    <select id="mens" onchange="onInput()">
+      <option value="12" data-i18n="optMens12">12 mensilità</option>
+      <option value="13" data-i18n="optMens13">13 mensilità</option>
+      <option value="14" selected data-i18n="optMens14">14 mensilità</option>
+    </select>
+  </div>
+  <div class="fl">
+    <label data-i18n="labExtra">Mensilità extra (13ª/14ª)</label>
+    <select id="extra" onchange="onInput()">
+      <option value="spalmata" data-i18n="optExtraSpread">Spalmata su ogni mese</option>
+      <option value="parte" selected data-i18n="optExtraSep">Pagata a parte (mese separato)</option>
+    </select>
+  </div>
+</div>
+
+<!-- TAB 1: LORDO → NETTO -->
+<div id="tab1">
+  <div class="sec" data-i18n="secRal">RAL annua lorda</div>
+  <div class="params" style="max-width:420px">
+    <div class="fl" style="grid-column:span 2">
+      <label data-i18n="labRal">RAL annua lorda (€)</label>
+      <input type="number" id="ral" value="19500" min="5000" max="300000" step="500" oninput="calcLN()">
+    </div>
+  </div>
+
+  <div class="sec" data-i18n="secKpi">KPI principali</div>
+  <div class="kpis">
+    <div class="kpi"><div class="klbl" data-i18n="kpiCostNoAg">Costo az. senza agev.</div><div class="kval" id="k1">—</div><div class="ksub" data-i18n="kpiYear">€/anno</div></div>
+    <div class="kpi hl"><div class="klbl" data-i18n="kpiCostAg">Costo az. con agev.</div><div class="kval g" id="k2">—</div><div class="ksub" data-i18n="kpiYear">€/anno</div></div>
+    <div class="kpi"><div class="klbl" data-i18n="kpiSavings">Risparmio annuo</div><div class="kval g" id="k3">—</div><div class="ksub" id="k3s"></div></div>
+    <div class="kpi hl"><div class="klbl" data-i18n="kpiNetto">Netto dipendente</div><div class="kval b" id="k4">—</div><div class="ksub" id="k4s"></div></div>
+  </div>
+
+  <div class="two">
+    <div class="pnl"><div class="pt" data-i18n="pnlCostAz">💼 Costo azienda</div><div id="azBox"></div></div>
+    <div class="pnl"><div class="pt" data-i18n="pnlPayslip">👤 Busta paga dipendente</div><div id="dipBox"></div><div style="margin-top:8px;padding:7px 9px;background:var(--ig);border-radius:7px;font-size:10.5px;color:var(--im)" id="ntBox"></div></div>
+  </div>
+
+  <div class="sec" data-i18n="secCompare">Confronto agevolazioni</div>
+  <div class="srt">
+    <button class="sbt on" onclick="setSort('tot',this)" data-i18n="sortTot">Per risparmio totale</button>
+    <button class="sbt" onclick="setSort('ann',this)" data-i18n="sortAnn">Per risparmio annuo</button>
+    <button class="sbt" onclick="setSort('dur',this)" data-i18n="sortDur">Per durata</button>
+  </div>
+  <table class="tbl"><thead><tr>
+    <th data-i18n="thMeas">Misura</th><th data-i18n="thCat">Cat.</th><th data-i18n="thType">Tipo</th><th data-i18n="thCap">Cap/mese</th><th data-i18n="thDur">Durata</th><th data-i18n="thSav">Risp. annuo</th><th data-i18n="thSavTot">Risp. totale</th><th data-i18n="thCostAz">Costo az.</th>
+  </tr></thead><tbody id="tbody"></tbody></table>
+</div>
+
+<!-- TAB 2: NETTO → LORDO -->
+<div id="tab2" style="display:none">
+  <div class="info-box" data-i18n="infoInverse">
+    💡 Inserisci il <strong>netto mensile desiderato</strong> e il sistema calcola automaticamente la RAL lorda corrispondente. Tieni conto della modalità di pagamento della mensilità extra sopra selezionata.
+  </div>
+  <div class="sec" data-i18n="secNettoDes">Netto mensile desiderato</div>
+  <div class="params" style="max-width:500px">
+    <div class="fl" style="grid-column:span 1">
+      <label data-i18n="labNettoTarget">Netto mensile target (€)</label>
+      <input type="number" id="nettoInp" class="inv-in" value="1400" min="300" max="20000" step="50" oninput="calcNL()">
+    </div>
+    <div class="fl">
+      <label data-i18n="labRalOut">RAL lorda risultante (€)</label>
+      <input type="number" id="ralOut" class="inv-out" readonly>
+    </div>
+    <div class="fl">
+      <label data-i18n="labCostoOut">Costo azienda con agev. (€)</label>
+      <input type="number" id="costoOut" class="inv-costo" readonly>
+    </div>
+  </div>
+
+  <div class="sec" data-i18n="secInvDetail">Dettaglio calcolo inverso</div>
+  <div class="two">
+    <div class="pnl" id="invAzBox"></div>
+    <div class="pnl" id="invDipBox"></div>
+  </div>
+  <div class="pnl" style="margin-bottom:14px">
+    <div class="pt" data-i18n="pnlHowItWorks">📐 Come funziona il calcolo inverso</div>
+    <div style="font-size:11.5px;color:var(--im);line-height:1.7" data-i18n="explainInverse" data-i18n-html>Il netto non è una funzione lineare del lordo (IRPEF è progressiva, le detrazioni variano, le addizionali sono proporzionali, il bonus cuneo fiscale L.207/2024 ha scaglioni). Il tool usa la <strong>bisezione numerica</strong>: parte da un intervallo [RAL_min, RAL_max], calcola il netto a metà intervallo e converge iterativamente finché lo scarto è &lt; 0,01 €.<br><br><strong>Il netto è sempre distribuito su 12 mesi solari</strong> (anno civile). La 13ª esce a dicembre col cedolino di dicembre, la 14ª a giugno/luglio col rispettivo cedolino.<br><strong>Mensilità "a parte"</strong>: nei cedolini di dicembre (e giugno se 14ª) si cumula la mensilità aggiuntiva. Su quella quota: INPS sì, IRPEF a aliquota marginale (la detrazione lavoro dipendente è già stata distribuita sui 12 mesi ordinari), addizionali no (conguaglio anno successivo). Risultato: il netto della quota extra è proporzionalmente più basso.<br><strong>Mensilità "spalmata"</strong>: il lordo viene distribuito uniformemente, ogni mese solare riceve netto_annuo ÷ 12.</div>
+  </div>
+</div>
+
+</div></div>
+
+<script>
+// ============================================================
+// i18n
+// ============================================================
+let lang = (function(){ try { return localStorage.getItem('hrLang')||'it'; } catch(e){ return 'it'; } })();
+
+const I18N = {
+  it: {
+    // Header & disclaimer
+    tagline:"HR CALCULATOR 2026",
+    incentivesBadge:"AGEVOLAZIONI 2026",
+    hdrSub:"Calcolatore HR · Tutte le regioni · Lordo ⇄ Netto · INPS apprendistato 5,84% · Gestione 14ª mensilità",
+    disclaimer:"<strong>Attenzione — stime indicative.</strong> I valori calcolati sono <strong>stime</strong> basate su parametri normativi standard 2025-2026. Per dati ufficiali e personalizzati (situazione familiare, fringe benefit, conguagli, CCNL specifici, addizionali del comune di residenza) verifica sempre con l'<strong>ufficio HR</strong> e con il <strong>Consulente del Lavoro</strong>.",
+    // Tabs
+    tab1:"📊 Lordo → Netto & Costo azienda",
+    tab2:"🔄 Netto → Lordo (calcolo inverso)",
+    // Sections
+    secParams:"Parametri lavoratore e azienda",
+    secRal:"RAL annua lorda",
+    secKpi:"KPI principali",
+    secCompare:"Confronto agevolazioni",
+    secNettoDes:"Netto mensile desiderato",
+    secInvDetail:"Dettaglio calcolo inverso",
+    // Form labels
+    labProfile:"Profilo / agevolazione",
+    labContract:"Tipo contratto",
+    labSector:"Settore CCNL",
+    labRegion:"Regione",
+    labSize:"Dimensione azienda",
+    labMonths:"N° mensilità totali",
+    labExtra:"Mensilità extra (13ª/14ª)",
+    labRal:"RAL annua lorda (€)",
+    labNettoTarget:"Netto mensile target (€)",
+    labRalOut:"RAL lorda risultante (€)",
+    labCostoOut:"Costo azienda con agev. (€)",
+    // Options - categories
+    optCatNone:"-- Nessuna agevolazione --",
+    optCatU35:"Under 35 (mai avuto indeterminato)",
+    optCatU30:"Under 30 strutturale L.205/2017",
+    optCatDonnaStr:"Donna svantaggiata L.92/2012",
+    optCatMadri:"Madre 3+ figli minorenni",
+    optCatViolenza:"Donna vittima di violenza",
+    optCatOver50:"Over 50 disoccupato 12+ mesi",
+    optCatDisab35:"Disabile lieve (20-79%)",
+    optCatDisab70:"Disabile grave (>79%) permanente",
+    optCatNaspi:"Percettore NASpI / ADI / SFL",
+    optCatAppr:"Apprendistato professionalizzante",
+    optCntrIndet:"Tempo indeterminato",
+    optCntrDet:"Tempo determinato",
+    optCntrAppr:"Apprendistato",
+    optSettInd:"Industria / Terziario (28,56%)",
+    optSettCom:"Commercio (30,20%)",
+    optSettEdi:"Edilizia (29,70%)",
+    optDimG:"11+ dipendenti",
+    optDimM:"6-10 dipendenti",
+    optDimP:"≤5 dipendenti",
+    optMens12:"12 mensilità",
+    optMens13:"13 mensilità",
+    optMens14:"14 mensilità",
+    optExtraSpread:"Spalmata su ogni mese",
+    optExtraSep:"Pagata a parte (mese separato)",
+    // Optgroups
+    optGrpYouth:"Giovani",
+    optGrpWomen:"Donne",
+    optGrpOver50:"Over 50",
+    optGrpDisab:"Disabilità",
+    optGrpContract:"Contratto",
+    optGrpNorth:"Centro-Nord",
+    optGrpZes:"ZES Mezzogiorno",
+    // Regions
+    optRegLOM:"Lombardia (1,23%)",optRegPIE:"Piemonte (1,62%)",optRegVEN:"Veneto (1,61%)",
+    optRegEMR:"Emilia-Romagna (1,33%)",optRegTOS:"Toscana (1,73%)",optRegLAZ:"Lazio (3,33%)",
+    optRegLIG:"Liguria (2,41%)",optRegMAR:"Marche (1,73%)",optRegUMB:"Umbria (1,73%)",
+    optRegFVG:"Friuli-V.G. (1,23%)",optRegTAA:"Trentino-A.A. (1,23%)",optRegVDA:"Valle d'Aosta (1,23%)",
+    optRegCAM:"Campania — ZES (2,03%)",optRegPUG:"Puglia — ZES (2,03%)",optRegCAL:"Calabria — ZES (2,03%)",
+    optRegSIC:"Sicilia — ZES (2,03%)",optRegBAS:"Basilicata — ZES (2,03%)",optRegSAR:"Sardegna — ZES (2,03%)",
+    optRegABR:"Abruzzo — ZES (2,03%)",optRegMOL:"Molise — ZES (2,03%)",
+    // KPI
+    kpiCostNoAg:"Costo az. senza agev.",
+    kpiCostAg:"Costo az. con agev.",
+    kpiSavings:"Risparmio annuo",
+    kpiNetto:"Netto dipendente",
+    kpiYear:"€/anno",
+    // Panel titles
+    pnlCostAz:"💼 Costo azienda",
+    pnlPayslip:"👤 Busta paga dipendente",
+    pnlHowItWorks:"📐 Come funziona il calcolo inverso",
+    // Sort buttons
+    sortTot:"Per risparmio totale",
+    sortAnn:"Per risparmio annuo",
+    sortDur:"Per durata",
+    // Table headers
+    thMeas:"Misura",thCat:"Cat.",thType:"Tipo",thCap:"Cap/mese",thDur:"Durata",
+    thSav:"Risp. annuo",thSavTot:"Risp. totale",thCostAz:"Costo az.",
+    // Info-box
+    infoInverse:"💡 Inserisci il <strong>netto mensile desiderato</strong> e il sistema calcola automaticamente la RAL lorda corrispondente. Tieni conto della modalità di pagamento della mensilità extra sopra selezionata.",
+    explainInverse:"Il netto non è una funzione lineare del lordo (IRPEF è progressiva, le detrazioni variano, le addizionali sono proporzionali, il bonus cuneo fiscale L.207/2024 ha scaglioni). Il tool usa la <strong>bisezione numerica</strong>: parte da un intervallo [RAL_min, RAL_max], calcola il netto a metà intervallo e converge iterativamente finché lo scarto è &lt; 0,01 €.<br><br><strong>Il netto è sempre distribuito su 12 mesi solari</strong> (anno civile). La 13ª esce a dicembre col cedolino di dicembre, la 14ª a giugno/luglio col rispettivo cedolino.<br><strong>Mensilità \"a parte\"</strong>: nei cedolini di dicembre (e giugno se 14ª) si cumula la mensilità aggiuntiva. Su quella quota: INPS sì, IRPEF a aliquota marginale (la detrazione lavoro dipendente è già stata distribuita sui 12 mesi ordinari), addizionali no (conguaglio anno successivo). Risultato: il netto della quota extra è proporzionalmente più basso.<br><strong>Mensilità \"spalmata\"</strong>: il lordo viene distribuito uniformemente, ogni mese solare riceve netto_annuo ÷ 12.",
+    // Notices
+    noticeZes:"✓ Regione ZES Mezzogiorno: cap agevolazioni maggiorati (+150 €/mese). Under 35: 650 €/mese | Donne: fino a 800 €/mese.",
+    noticeStd:"Regione Centro-Nord: cap standard (under 35: 500 €/mese). Add. regionale: ",
+    // Dynamic strings in render functions
+    ralLorda:"RAL lorda",
+    ralCalc:"RAL calcolata",
+    inpsDat:"INPS datore",
+    inpsLav:"INPS lav.",
+    apprBadge:"appr.",
+    esoneroAgev:"Esonero agevolazione",
+    inpsDatNet:"INPS datore netto",
+    tfr:"TFR (8,33%)",
+    costoTotAgev:"Costo totale con agev.",
+    costoMeseMedio:"Costo mensile medio",
+    rispTotPeriodo:"Risparmio tot. periodo",
+    permanente:"permanente",
+    yearPerm:"€/anno permanente",
+    yearTotIn:"€/anno · tot. ",
+    inMonths:" € in ",
+    monthsSuffix:" mesi",
+    impIrpef:"Imponibile IRPEF",
+    irpefNetta:"IRPEF netta (−detrazioni)",
+    addRegCom:"Add. reg. + com.",
+    bonusCuneo:"Bonus cuneo fiscale",
+    nettoAnnuo:"Netto annuo",
+    pctNettoLordo:"% netto su lordo",
+    nettoMeseOrd:"Netto mese ordinario",
+    nettoMeseLabel:"netto mese ordinario",
+    onGross:" su lordo",
+    spalmataNote:"Netto uguale ogni mese solare:",
+    perDivMesi:"(netto annuo ÷ 12 mesi)",
+    meseOrd:"Mese ordinario:",
+    quota13:"Quota 13ª:",
+    quota1314:"Quota 13ª/14ª:",
+    quotaNetta13:"Quota 13ª netta",
+    quotaNetta1314:"Quota 13ª/14ª netta",
+    cedolinoNote:"(sul cedolino della 13ª/14ª si somma a quello ordinario)",
+    nettoMensile:"Netto mensile:",
+    scartoTarget:"Scarto dal target",
+    modExtra:"Modalità mensilità extra",
+    spalmataMode:"Spalmata su 12 mesi",
+    parteMode:"Pagata a parte (cumulata su giu/dic)",
+    costoAzRAL:"Costo azienda — RAL ",
+    payslipTarget:"Busta paga — target ",
+    perMonth:" €/mese",
+    perYear:" €/anno",
+    nessunCap:"Nessun cap",
+    permBadge:"Perm.",
+    // AGEV labels (l)
+    agvL_under35:"Bonus giovani under 35",
+    agvL_under30:"Bonus under 30 strutturale",
+    agvL_donna_str:"Donna svantaggiata L.92/2012",
+    agvL_madri:"Madre 3+ figli",
+    agvL_violenza:"Donna vittima violenza",
+    agvL_over50:"Over 50 disoccupato",
+    agvL_disab35:"Disabile lieve (20-79%)",
+    agvL_disab70:"Disabile grave (>79%)",
+    agvL_naspi:"Percettore NASpI/ADI/SFL",
+    agvL_appr:"Apprendistato profess.",
+    agvL_nessuna:"Nessuna",
+    // AGEV categories (c)
+    agvC_Giovani:"Giovani",
+    agvC_Donne:"Donne",
+    "agvC_Over 50":"Over 50",
+    "agvC_Disabilità":"Disabilità",
+    agvC_Svantaggio:"Svantaggio",
+    agvC_Contratto:"Contratto",
+    "agvC_—":"—",
+    // AGEV types (t)
+    "agvT_100% esonero":"100% esonero",
+    "agvT_Fisso 250€/mese":"Fisso 250€/mese",
+    "agvT_50% riduzione":"50% riduzione",
+    "agvT_35% esonero":"35% esonero",
+    "agvT_100% permanente":"100% permanente",
+    "agvT_Contributo 20%":"Contributo 20%",
+    "agvT_Aliquota ridotta":"Aliquota ridotta",
+    "agvT_—":"—",
+  },
+  en: {
+    tagline:"HR CALCULATOR 2026",
+    incentivesBadge:"INCENTIVES 2026",
+    hdrSub:"HR Calculator · All regions · Gross ⇄ Net · Apprenticeship INPS 5.84% · 14th-month handling",
+    disclaimer:"<strong>Notice — estimated values.</strong> Calculations are <strong>estimates</strong> based on standard 2025-2026 regulatory parameters. For official, personalised figures (family status, fringe benefits, year-end adjustments, specific CCNL collective agreements, municipal surtaxes) always verify with your <strong>HR department</strong> and a qualified <strong>Labour Consultant</strong>.",
+    tab1:"📊 Gross → Net & Employer Cost",
+    tab2:"🔄 Net → Gross (reverse calculation)",
+    secParams:"Employee and company parameters",
+    secRal:"Gross annual salary (RAL)",
+    secKpi:"Key indicators",
+    secCompare:"Incentive comparison",
+    secNettoDes:"Desired monthly net",
+    secInvDetail:"Reverse calculation detail",
+    labProfile:"Profile / incentive",
+    labContract:"Contract type",
+    labSector:"CCNL sector",
+    labRegion:"Region",
+    labSize:"Company size",
+    labMonths:"Total monthly payments",
+    labExtra:"Extra months (13th/14th)",
+    labRal:"Gross annual salary (€)",
+    labNettoTarget:"Target monthly net (€)",
+    labRalOut:"Resulting gross salary (€)",
+    labCostoOut:"Employer cost with incentive (€)",
+    optCatNone:"-- No incentive --",
+    optCatU35:"Under 35 (never had open-ended contract)",
+    optCatU30:"Under 30 structural L.205/2017",
+    optCatDonnaStr:"Disadvantaged woman L.92/2012",
+    optCatMadri:"Mother with 3+ minor children",
+    optCatViolenza:"Woman victim of violence",
+    optCatOver50:"Over 50, unemployed 12+ months",
+    optCatDisab35:"Mild disability (20-79%)",
+    optCatDisab70:"Severe disability (>79%) permanent",
+    optCatNaspi:"NASpI / ADI / SFL recipient",
+    optCatAppr:"Vocational apprenticeship",
+    optCntrIndet:"Open-ended",
+    optCntrDet:"Fixed-term",
+    optCntrAppr:"Apprenticeship",
+    optSettInd:"Industry / Services (28.56%)",
+    optSettCom:"Commerce (30.20%)",
+    optSettEdi:"Construction (29.70%)",
+    optDimG:"11+ employees",
+    optDimM:"6-10 employees",
+    optDimP:"≤5 employees",
+    optMens12:"12 monthly payments",
+    optMens13:"13 monthly payments",
+    optMens14:"14 monthly payments",
+    optExtraSpread:"Spread over every month",
+    optExtraSep:"Paid separately (separate month)",
+    optGrpYouth:"Youth",
+    optGrpWomen:"Women",
+    optGrpOver50:"Over 50",
+    optGrpDisab:"Disability",
+    optGrpContract:"Contract",
+    optGrpNorth:"Centre-North",
+    optGrpZes:"Southern SEZ",
+    optRegLOM:"Lombardy (1.23%)",optRegPIE:"Piedmont (1.62%)",optRegVEN:"Veneto (1.61%)",
+    optRegEMR:"Emilia-Romagna (1.33%)",optRegTOS:"Tuscany (1.73%)",optRegLAZ:"Lazio (3.33%)",
+    optRegLIG:"Liguria (2.41%)",optRegMAR:"Marche (1.73%)",optRegUMB:"Umbria (1.73%)",
+    optRegFVG:"Friuli-V.G. (1.23%)",optRegTAA:"Trentino-A.A. (1.23%)",optRegVDA:"Aosta Valley (1.23%)",
+    optRegCAM:"Campania — SEZ (2.03%)",optRegPUG:"Apulia — SEZ (2.03%)",optRegCAL:"Calabria — SEZ (2.03%)",
+    optRegSIC:"Sicily — SEZ (2.03%)",optRegBAS:"Basilicata — SEZ (2.03%)",optRegSAR:"Sardinia — SEZ (2.03%)",
+    optRegABR:"Abruzzo — SEZ (2.03%)",optRegMOL:"Molise — SEZ (2.03%)",
+    kpiCostNoAg:"Employer cost (no incentive)",
+    kpiCostAg:"Employer cost (with incentive)",
+    kpiSavings:"Annual savings",
+    kpiNetto:"Employee net",
+    kpiYear:"€/year",
+    pnlCostAz:"💼 Employer cost",
+    pnlPayslip:"👤 Employee payslip",
+    pnlHowItWorks:"📐 How the reverse calculation works",
+    sortTot:"By total savings",
+    sortAnn:"By annual savings",
+    sortDur:"By duration",
+    thMeas:"Measure",thCat:"Cat.",thType:"Type",thCap:"Cap/month",thDur:"Duration",
+    thSav:"Annual sav.",thSavTot:"Total sav.",thCostAz:"Empl. cost",
+    infoInverse:"💡 Enter the <strong>desired monthly net</strong> and the system will compute the corresponding gross salary. Take into account the extra-month payment mode selected above.",
+    explainInverse:"Net pay is not a linear function of gross (IRPEF is progressive, deductions vary, surtaxes are proportional, the L.207/2024 fiscal-wedge bonus is tiered). The tool uses <strong>numerical bisection</strong>: it starts from an interval [RAL_min, RAL_max], computes the net at the midpoint and iteratively converges until the gap is &lt; 0.01 €.<br><br><strong>Net is always distributed over 12 calendar months</strong>. The 13th month is paid in December alongside the December payslip; the 14th in June/July alongside that month's payslip.<br><strong>\"Paid separately\" mode</strong>: in December (and June if a 14th is due) the extra month is added on top of the regular payslip. On that extra amount: INPS yes, IRPEF at marginal rate (the employee deduction is already spread over the 12 ordinary months), surtaxes no (settled the following year). Result: the net of the extra portion is proportionally lower.<br><strong>\"Spread\" mode</strong>: gross is distributed uniformly; each calendar month receives annual_net ÷ 12.",
+    noticeZes:"✓ Southern SEZ region: increased incentive caps (+150 €/month). Under 35: 650 €/month | Women: up to 800 €/month.",
+    noticeStd:"Centre-North region: standard caps (under 35: 500 €/month). Regional surtax: ",
+    ralLorda:"Gross salary",
+    ralCalc:"Computed gross",
+    inpsDat:"Employer INPS",
+    inpsLav:"Employee INPS",
+    apprBadge:"appr.",
+    esoneroAgev:"Incentive exemption",
+    inpsDatNet:"Net employer INPS",
+    tfr:"Severance (8.33%)",
+    costoTotAgev:"Total cost with incentive",
+    costoMeseMedio:"Average monthly cost",
+    rispTotPeriodo:"Total period savings",
+    permanente:"permanent",
+    yearPerm:"€/year permanent",
+    yearTotIn:"€/year · total ",
+    inMonths:" € over ",
+    monthsSuffix:" months",
+    impIrpef:"IRPEF taxable base",
+    irpefNetta:"IRPEF net (−deductions)",
+    addRegCom:"Regional + municipal surtax",
+    bonusCuneo:"Fiscal-wedge bonus",
+    nettoAnnuo:"Annual net",
+    pctNettoLordo:"Net / gross %",
+    nettoMeseOrd:"Ordinary monthly net",
+    nettoMeseLabel:"ordinary monthly net",
+    onGross:" of gross",
+    spalmataNote:"Same net every calendar month:",
+    perDivMesi:"(annual net ÷ 12 months)",
+    meseOrd:"Ordinary month:",
+    quota13:"13th-month share:",
+    quota1314:"13th/14th-month share:",
+    quotaNetta13:"13th-month net share",
+    quotaNetta1314:"13th/14th-month net share",
+    cedolinoNote:"(on the 13th/14th payslip it is added to the regular one)",
+    nettoMensile:"Monthly net:",
+    scartoTarget:"Gap vs target",
+    modExtra:"Extra-month mode",
+    spalmataMode:"Spread over 12 months",
+    parteMode:"Paid separately (cumulated in Jun/Dec)",
+    costoAzRAL:"Employer cost — gross ",
+    payslipTarget:"Payslip — target ",
+    perMonth:" €/month",
+    perYear:" €/year",
+    nessunCap:"No cap",
+    permBadge:"Perm.",
+    agvL_under35:"Under-35 youth bonus",
+    agvL_under30:"Under-30 structural bonus",
+    agvL_donna_str:"Disadvantaged woman L.92/2012",
+    agvL_madri:"Mother 3+ children",
+    agvL_violenza:"Woman victim of violence",
+    agvL_over50:"Over-50 unemployed",
+    agvL_disab35:"Mild disability (20-79%)",
+    agvL_disab70:"Severe disability (>79%)",
+    agvL_naspi:"NASpI/ADI/SFL recipient",
+    agvL_appr:"Vocational apprenticeship",
+    agvL_nessuna:"None",
+    agvC_Giovani:"Youth",
+    agvC_Donne:"Women",
+    "agvC_Over 50":"Over 50",
+    "agvC_Disabilità":"Disability",
+    agvC_Svantaggio:"Disadvantage",
+    agvC_Contratto:"Contract",
+    "agvC_—":"—",
+    "agvT_100% esonero":"100% exemption",
+    "agvT_Fisso 250€/mese":"Fixed €250/month",
+    "agvT_50% riduzione":"50% reduction",
+    "agvT_35% esonero":"35% exemption",
+    "agvT_100% permanente":"100% permanent",
+    "agvT_Contributo 20%":"20% contribution",
+    "agvT_Aliquota ridotta":"Reduced rate",
+    "agvT_—":"—",
+  }
+};
+function t(k){ const v=I18N[lang]&&I18N[lang][k]; return v!=null?v:k; }
+function tA(prefix,k){ return t(prefix+'_'+k); }
+function applyStaticTranslations(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    const attr=el.getAttribute('data-i18n-attr');
+    const asHtml = el.hasAttribute('data-i18n-html') || /[<&]/.test(t(key));
+    if(attr){
+      el.setAttribute(attr, t(key));
+    } else if(asHtml){
+      el.innerHTML = t(key);
+    } else {
+      el.textContent = t(key);
+    }
+  });
+  document.documentElement.lang = lang;
+  document.getElementById('langIt').classList.toggle('on', lang==='it');
+  document.getElementById('langEn').classList.toggle('on', lang==='en');
+}
+function setLang(l){
+  if(l!==lang){
+    lang=l;
+    try{ localStorage.setItem('hrLang',l); }catch(e){}
+    applyStaticTranslations();
+    onInput();
+  }
+}
+
+// ============================================================
+// Formatting (locale-aware)
+// ============================================================
+const fmt=n=>Math.round(n).toLocaleString(lang==='it'?'it-IT':'en-US');
+const fmtD=n=>lang==='it'?n.toFixed(2).replace('.',','):n.toFixed(2);
+const pct=(n,d=2)=>{const s=(n*100).toFixed(d); return (lang==='it'?s.replace('.',','):s)+'%';};
+
+let sortMode='tot', activeTab=1;
+
+const REGS={
+  LOM:{ar:.0123,zes:false},PIE:{ar:.0162,zes:false},VEN:{ar:.0161,zes:false},
+  EMR:{ar:.0133,zes:false},TOS:{ar:.0173,zes:false},LAZ:{ar:.0333,zes:false},
+  LIG:{ar:.0241,zes:false},MAR:{ar:.0173,zes:false},UMB:{ar:.0173,zes:false},
+  FVG:{ar:.0123,zes:false},TAA:{ar:.0123,zes:false},VDA:{ar:.0123,zes:false},
+  CAM:{ar:.0203,zes:true},PUG:{ar:.0203,zes:true},CAL:{ar:.0203,zes:true},
+  SIC:{ar:.0203,zes:true},BAS:{ar:.0203,zes:true},SAR:{ar:.0203,zes:true},
+  ABR:{ar:.0203,zes:true},MOL:{ar:.0203,zes:true}
+};
+const SETT={ind:.2856,com:.3020,edi:.2970};
+const AGEV=[
+  {k:'under35',c:'Giovani',ty:'100% esonero',e:1,mn:500,mz:650,ms:24},
+  {k:'under30',c:'Giovani',ty:'Fisso 250€/mese',e:'f',mn:250,mz:250,ms:36},
+  {k:'donna_str',c:'Donne',ty:'50% riduzione',e:.5,mn:9999,mz:9999,ms:18},
+  {k:'madri',c:'Donne',ty:'100% esonero',e:1,mn:667,mz:800,ms:18},
+  {k:'violenza',c:'Donne',ty:'100% esonero',e:1,mn:9999,mz:9999,ms:24},
+  {k:'over50',c:'Over 50',ty:'50% riduzione',e:.5,mn:9999,mz:9999,ms:18},
+  {k:'disab35',c:'Disabilità',ty:'35% esonero',e:.35,mn:9999,mz:9999,ms:36},
+  {k:'disab70',c:'Disabilità',ty:'100% permanente',e:1,mn:9999,mz:9999,ms:999},
+  {k:'naspi',c:'Svantaggio',ty:'Contributo 20%',e:'n',mn:9999,mz:9999,ms:12},
+  {k:'appr',c:'Contratto',ty:'Aliquota ridotta',e:'a',mn:9999,mz:9999,ms:48},
+  {k:'nessuna',c:'—',ty:'—',e:0,mn:0,mz:0,ms:0},
+];
+
+function aliqD(cntr,dim){
+  if(cntr==='appr') return dim==='g'?.1161:.10;
+  return SETT[document.getElementById('sett').value]||.2856;
+}
+function aliqL(cntr){ return cntr==='appr'?.0584:.0919; }
+
+function calcEson(ag,cd,ral,dim,zes,cntr,sett){
+  const cap=zes?ag.mz:ag.mn;
+  if(ag.e===0) return 0;
+  if(ag.e==='f') return Math.min(cap,cd/12)*12;
+  if(ag.e==='n') return ral*.20*.5;
+  if(ag.e==='a'){
+    if(cntr==='appr') return 0;
+    const aAppr = (dim==='g') ? .1161 : .10;
+    const aStd = SETT[sett] || .2856;
+    return ral*Math.max(0, aStd-aAppr);
+  }
+  if(cap>=9999) return cd*ag.e;
+  return Math.min(cd*ag.e,cap*12);
+}
+
+function calcIRPEFlorda(imp){
+  let tt=0,r=Math.max(0,imp);
+  for(const[l,a] of [[28000,.23],[22000,.35],[Infinity,.43]]){const c=Math.min(r,l);tt+=c*a;r-=c;if(r<=0)break;}
+  return tt;
+}
+function calcDetrazione(imp){
+  if(imp<=15000) return 1955;
+  if(imp<=28000) return 1910+1190*((28000-imp)/13000);
+  if(imp<=50000) return 1910*((50000-imp)/22000);
+  return 0;
+}
+function calcUlterioreDetrazione(imp){
+  if(imp>=20000 && imp<=32000) return 1000;
+  if(imp>32000 && imp<40000) return 1000*((40000-imp)/8000);
+  return 0;
+}
+function calcBonusCuneo(ral){
+  if(ral<=8500) return ral*0.071;
+  if(ral<=15000) return ral*0.053;
+  if(ral<=20000) return ral*0.048;
+  return 0;
+}
+function calcIRPEF(imp){
+  return Math.max(0, calcIRPEFlorda(imp) - calcDetrazione(imp) - calcUlterioreDetrazione(imp));
+}
+
+function calcNetto(ral,cntr,regKey,mens,extra){
+  const reg=REGS[regKey];
+  const inpsL=ral*aliqL(cntr);
+  const imp=ral-inpsL;
+  const irpef=calcIRPEF(imp);
+  const ar=imp*reg.ar;
+  const ac=imp*.007;
+  const bonus=calcBonusCuneo(ral);
+  const nettoAnnuo=ral-inpsL-irpef-ar-ac+bonus;
+  if(mens<=12 || extra==='spalmata'){
+    const m=nettoAnnuo/12;
+    return{nettoAnnuo,nettoMese:m,nettoMeseOrd:m,nettoMeseExtra:m,inpsL,imp,irpef,ar,ac,bonus};
+  }
+  const nExtra=mens-12;
+  const lordoExtra=ral/mens;
+  const inpsExtra=lordoExtra*aliqL(cntr);
+  const impExtra=lordoExtra-inpsExtra;
+  let aliqMarg=.23;
+  if(imp>50000) aliqMarg=.43; else if(imp>28000) aliqMarg=.35;
+  const irpefExtra=impExtra*aliqMarg;
+  const nettoMeseExtra=lordoExtra-inpsExtra-irpefExtra;
+  const nettoOrdTot=nettoAnnuo-nettoMeseExtra*nExtra;
+  const nettoMeseOrd=nettoOrdTot/12;
+  return{nettoAnnuo,nettoMese:nettoMeseOrd,nettoMeseOrd,nettoMeseExtra,inpsL,imp,irpef,ar,ac,bonus,nExtra};
+}
+
+function ralFromNetto(target,cntr,regKey,mens,extra){
+  let lo=target*12*0.5, hi=target*12*4;
+  for(let i=0;i<80;i++){
+    const mid=(lo+hi)/2;
+    const n=calcNetto(mid,cntr,regKey,mens,extra).nettoMeseOrd;
+    if(Math.abs(n-target)<0.005) return mid;
+    if(n<target) lo=mid; else hi=mid;
+  }
+  return (lo+hi)/2;
+}
+
+function getParams(){
+  return{
+    cat:document.getElementById('cat').value,
+    cntr:document.getElementById('cntr').value,
+    sett:document.getElementById('sett').value,
+    reg:document.getElementById('reg').value,
+    dim:document.getElementById('dim').value,
+    mens:parseInt(document.getElementById('mens').value),
+    extra:document.getElementById('extra').value,
+  };
+}
+
+function updateNotice(zes){
+  document.getElementById('ntcBox').innerHTML = zes
+    ? `<div class="ntc n-z">${t('noticeZes')}</div>`
+    : `<div class="ntc n-n">${t('noticeStd')}${pct(REGS[document.getElementById('reg').value].ar)}.</div>`;
+}
+
+function calcLN(){
+  const p=getParams();
+  const reg=REGS[p.reg]; updateNotice(reg.zes);
+  const ral=parseFloat(document.getElementById('ral').value)||19500;
+  const adS=SETT[p.sett]||.2856;
+  const ad=aliqD(p.cntr,p.dim);
+  const cdStd=ral*adS, cd=ral*ad, tfr=ral*.0833;
+  const costoBase=ral+cdStd+tfr;
+  const ag=AGEV.find(a=>a.k===p.cat);
+  const eson=calcEson(ag,cd,ral,p.dim,reg.zes,p.cntr,p.sett);
+  const costoAgev=ral+cd-eson+tfr;
+  const risp=costoBase-costoAgev;
+  const rispTot=ag.ms===999?risp:risp*(ag.ms/12);
+
+  const nn=calcNetto(ral,p.cntr,p.reg,p.mens,p.extra);
+  const {nettoAnnuo,nettoMese,nettoMeseOrd,nettoMeseExtra,inpsL,imp,irpef,ar,ac,bonus}=nn;
+  const pN=(nettoAnnuo/ral*100).toFixed(1);
+  const alL=aliqL(p.cntr);
+  const extraNote = p.extra==='spalmata'
+    ? `${t('spalmataNote')} <strong>${fmt(nettoMese)} €</strong> ${t('perDivMesi')}`
+    : p.mens>12
+      ? `${t('meseOrd')} <strong>${fmt(nettoMeseOrd)} €</strong> · ${p.mens-12===1?t('quota13'):t('quota1314')} <strong>${fmt(nettoMeseExtra)} €</strong> ${t('cedolinoNote')}`
+      : `${t('nettoMensile')} ${fmt(nettoMese)} €`;
+
+  document.getElementById('k1').textContent=fmt(costoBase)+' €';
+  document.getElementById('k2').textContent=fmt(costoAgev)+' €';
+  document.getElementById('k3').textContent=fmt(risp)+' €';
+  document.getElementById('k3s').textContent = ag.ms===999
+    ? t('yearPerm')
+    : t('yearTotIn')+fmt(rispTot)+t('inMonths')+ag.ms+t('monthsSuffix');
+  document.getElementById('k4').textContent=fmt(nettoMeseOrd)+' €';
+  document.getElementById('k4s').textContent = `${t('nettoMeseLabel')} · ${pN}%${t('onGross')}`;
+
+  document.getElementById('azBox').innerHTML=`
+    <div class="rd"><span class="rl">${t('ralLorda')}</span><span class="rv">${fmt(ral)} €</span></div>
+    <div class="rd"><span class="rl">${t('inpsDat')} (${pct(ad)})</span><span class="rv">${fmt(cd)} €</span></div>
+    <div class="rd"><span class="rl">${t('esoneroAgev')}</span><span class="rv g">${p.cat==='nessuna'?'—':'− '+fmt(eson)+' €'}</span></div>
+    <div class="rd"><span class="rl">${t('inpsDatNet')}</span><span class="rv">${fmt(Math.max(0,cd-eson))} €</span></div>
+    <div class="rd"><span class="rl">${t('tfr')}</span><span class="rv">${fmt(tfr)} €</span></div>
+    <div class="rd tot"><span class="rl">${t('costoTotAgev')}</span><span class="rv g">${fmt(costoAgev)}${t('perYear')}</span></div>
+    <div class="rd"><span class="rl">${t('costoMeseMedio')}</span><span class="rv">${fmt(costoAgev/12)}${t('perMonth')}</span></div>
+    <div class="rd"><span class="rl">${t('rispTotPeriodo')}</span><span class="rv g">${ag.ms===999?t('permanente'):fmt(rispTot)+' €'}</span></div>`;
+
+  document.getElementById('dipBox').innerHTML=`
+    <div class="rd"><span class="rl">${t('ralLorda')}</span><span class="rv">${fmt(ral)} €</span></div>
+    <div class="rd"><span class="rl">${t('inpsLav')} (${pct(alL)}) ${p.cntr==='appr'?'<span class="bdg b-gn">'+t('apprBadge')+'</span>':''}</span><span class="rv r">− ${fmt(inpsL)} €</span></div>
+    <div class="rd"><span class="rl">${t('impIrpef')}</span><span class="rv">${fmt(imp)} €</span></div>
+    <div class="rd"><span class="rl">${t('irpefNetta')}</span><span class="rv r">− ${fmt(irpef)} €</span></div>
+    <div class="rd"><span class="rl">${t('addRegCom')}</span><span class="rv r">− ${fmt(ar+ac)} €</span></div>
+    ${bonus>0?`<div class="rd"><span class="rl">${t('bonusCuneo')} <span class="bdg b-gn">L.207/24</span></span><span class="rv g">+ ${fmt(bonus)} €</span></div>`:''}
+    <div class="rd tot"><span class="rl">${t('nettoAnnuo')}</span><span class="rv b">${fmt(nettoAnnuo)} €</span></div>
+    <div class="rd"><span class="rl">${t('pctNettoLordo')}</span><span class="rv">${pN}%</span></div>`;
+  document.getElementById('ntBox').innerHTML=extraNote;
+
+  // comparison table
+  const rows=AGEV.filter(a=>a.k!=='nessuna').map(a=>{
+    const e=calcEson(a,ral*aliqD(p.cntr,p.dim),ral,p.dim,reg.zes,p.cntr,p.sett);
+    const ca=ral+ral*aliqD(p.cntr,p.dim)-e+tfr;
+    const tot=a.ms===999?e:e*(a.ms/12);
+    return{...a,e,tot,ca};
+  });
+  if(sortMode==='tot') rows.sort((a,b)=>b.tot-a.tot);
+  else if(sortMode==='ann') rows.sort((a,b)=>b.e-a.e);
+  else rows.sort((a,b)=>(b.ms===999?9999:b.ms)-(a.ms===999?9999:a.ms));
+  const cc={Giovani:'b-bl',Donne:'b-tl','Over 50':'b-am',Disabilità:'b-pu',Svantaggio:'b-pu',Contratto:'b-bl'};
+  document.getElementById('tbody').innerHTML=rows.map(a=>{
+    const iC=a.k===p.cat;
+    const cap=reg.zes?a.mz:a.mn;
+    return`<tr class="${iC?'cur':''}">
+      <td><strong>${tA('agvL',a.k)}</strong>${iC?' <span class="bdg b-sel">✓</span>':''}</td>
+      <td><span class="bdg ${cc[a.c]||'b-gr'}">${tA('agvC',a.c)}</span></td>
+      <td style="font-size:10px">${tA('agvT',a.ty)}</td>
+      <td>${cap>=9999?t('nessunCap'):fmt(cap)+' €'}</td>
+      <td>${a.ms===999?'<span class="bdg b-pu">'+t('permBadge')+'</span>':a.ms+t('monthsSuffix')}</td>
+      <td class="g" style="font-weight:500">${fmt(a.e)} €</td>
+      <td style="font-weight:500">${a.ms===999?fmt(a.e)+' €/y':fmt(a.tot)+' €'}</td>
+      <td>${fmt(a.ca)} €</td>
+    </tr>`;
+  }).join('');
+}
+
+function calcNL(){
+  const p=getParams();
+  const reg=REGS[p.reg]; updateNotice(reg.zes);
+  const target=parseFloat(document.getElementById('nettoInp').value)||1400;
+  const ral=ralFromNetto(target,p.cntr,p.reg,p.mens,p.extra);
+
+  const ad=aliqD(p.cntr,p.dim);
+  const adS=SETT[p.sett]||.2856;
+  const tfr=ral*.0833;
+  const cdS=ral*adS, cd=ral*ad;
+  const costoBase=ral+cdS+tfr;
+  const ag=AGEV.find(a=>a.k===p.cat);
+  const eson=calcEson(ag,cd,ral,p.dim,reg.zes,p.cntr,p.sett);
+  const costoAgev=ral+cd-eson+tfr;
+
+  document.getElementById('ralOut').value=Math.round(ral);
+  document.getElementById('costoOut').value=Math.round(costoAgev);
+
+  const nn=calcNetto(ral,p.cntr,p.reg,p.mens,p.extra);
+  const {nettoAnnuo,nettoMeseOrd,nettoMeseExtra,inpsL,imp,irpef,ar,ac,bonus}=nn;
+  const alL=aliqL(p.cntr);
+  const scarto=nettoMeseOrd-target;
+
+  const extraRiga = p.extra==='parte' && p.mens>12
+    ? `<div class="rd"><span class="rl">${p.mens-12===1?t('quotaNetta13'):t('quotaNetta1314')}</span><span class="rv b">${fmt(nettoMeseExtra)} €</span></div>`
+    : '';
+
+  document.getElementById('invAzBox').innerHTML=`
+    <div class="pt">${t('pnlCostAz').replace('💼 ','💼 ')} — ${t('ralLorda')} ${fmt(ral)} €</div>
+    <div class="rd"><span class="rl">${t('ralCalc')}</span><span class="rv g">${fmt(ral)} €</span></div>
+    <div class="rd"><span class="rl">${t('inpsDat')} (${pct(ad)})</span><span class="rv">${fmt(cd)} €</span></div>
+    <div class="rd"><span class="rl">${t('esoneroAgev')}</span><span class="rv g">${p.cat==='nessuna'||eson===0?'—':'− '+fmt(eson)+' €'}</span></div>
+    <div class="rd"><span class="rl">${t('tfr')}</span><span class="rv">${fmt(tfr)} €</span></div>
+    <div class="rd tot"><span class="rl">${t('costoTotAgev')}</span><span class="rv b">${fmt(costoAgev)}${t('perYear')}</span></div>
+    <div class="rd"><span class="rl">${t('costoMeseMedio')}</span><span class="rv">${fmt(costoAgev/12)}${t('perMonth')}</span></div>`;
+
+  document.getElementById('invDipBox').innerHTML=`
+    <div class="pt">${t('pnlPayslip')} — ${t('payslipTarget')}${fmt(target)}${t('perMonth')}</div>
+    <div class="rd"><span class="rl">${t('ralLorda')}</span><span class="rv">${fmt(ral)} €</span></div>
+    <div class="rd"><span class="rl">${t('inpsLav')} (${pct(alL)}) ${p.cntr==='appr'?'<span class="bdg b-gn">'+t('apprBadge')+'</span>':''}</span><span class="rv r">− ${fmt(inpsL)} €</span></div>
+    <div class="rd"><span class="rl">${t('irpefNetta')}</span><span class="rv r">− ${fmt(irpef)} €</span></div>
+    <div class="rd"><span class="rl">${t('addRegCom')}</span><span class="rv r">− ${fmt(ar+ac)} €</span></div>
+    ${bonus>0?`<div class="rd"><span class="rl">${t('bonusCuneo')} <span class="bdg b-gn">L.207/24</span></span><span class="rv g">+ ${fmt(bonus)} €</span></div>`:''}
+    <div class="rd tot"><span class="rl">${t('nettoAnnuo')}</span><span class="rv b">${fmt(nettoAnnuo)} €</span></div>
+    <div class="rd"><span class="rl">${t('nettoMeseOrd')}</span><span class="rv b">${fmt(nettoMeseOrd)}${t('perMonth')}</span></div>
+    ${extraRiga}
+    <div class="rd"><span class="rl">${t('scartoTarget')}</span><span class="rv" style="color:${Math.abs(scarto)<1?'var(--ign)':'var(--ia)'}">${scarto>=0?'+':''}${fmtD(scarto)} €</span></div>
+    <div class="rd"><span class="rl">${t('modExtra')}</span><span class="rv">${p.extra==='spalmata'?t('spalmataMode'):t('parteMode')}</span></div>`;
+}
+
+function setSort(m,btn){sortMode=m;document.querySelectorAll('.sbt').forEach(b=>b.classList.remove('on'));btn.classList.add('on');calcLN();}
+function setTab(n){
+  activeTab=n;
+  document.getElementById('tab1').style.display=n===1?'block':'none';
+  document.getElementById('tab2').style.display=n===2?'block':'none';
+  document.getElementById('t1').classList.toggle('on',n===1);
+  document.getElementById('t2').classList.toggle('on',n===2);
+  onInput();
+}
+function onInput(){if(activeTab===1)calcLN();else calcNL();}
+
+applyStaticTranslations();
+calcLN();
+</script>
